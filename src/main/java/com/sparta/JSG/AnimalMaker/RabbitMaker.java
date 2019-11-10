@@ -25,7 +25,6 @@ public class RabbitMaker extends AnimalMaker{
 
     /**
     Phase 1 - Rabbits
-                * Each second will represent a month
                 * Breeding rabbits reach maturity at 3 months
                 * The programme will start with a single breeding pair
         * If a male is available a female can be pregnant and give birth in one month
@@ -53,7 +52,7 @@ public class RabbitMaker extends AnimalMaker{
     public void makeRabbit(int babies){
         List<RabbitMaker> rabbitMakerList = rabbits;
         for (int i = 0; i <babies; i++) {
-            rabbitMakerList.add(new RabbitMaker(getName(), getGender()));
+            rabbitMakerList.add(new RabbitMaker(i, returnGender()));
         }
     }
 
@@ -64,11 +63,14 @@ public class RabbitMaker extends AnimalMaker{
         Random random = new Random();
         int babies = random.nextInt((max-min) +1) + min;
         for (RabbitMaker rabbitMaker: rabbits) {
-            if ((rabbitMaker.getGender() == "Female" & rabbitMaker.canBreed(3) & (maleRabbits > 1))){
+            if ((rabbitMaker.getGender() == "Female" & rabbitMaker.canBreed() & (maleRabbits > 1))){
                 makeRabbit(babies);
+            } else {
+                incrementMonth();
             }
         }
-        System.out.println(rabbits);
+        updateGender();
+        breedRabbits();
     }
 
     public int getPopulation(){
@@ -84,8 +86,27 @@ public class RabbitMaker extends AnimalMaker{
     }
 
 
+    public void updateGender(){
+        for (RabbitMaker rabbitMaker: rabbits) {
+            if (rabbitMaker.getGender() == "Male"){
+                maleRabbits++;
+            } else{
+              femaleRabbits++;
+            }
+        }
+    }
+
+    public boolean isAvailable(){
+        if (rabbits.isEmpty()){
+            return false;
+        }
+        return true;
+    }
 
 
+    public List<RabbitMaker> getListOfRabbits(){
+        return rabbits;
+    }
 
 
 

@@ -6,7 +6,6 @@ public class DisplayPopulation {
 RabbitMaker rabbitMaker = new RabbitMaker();
 
 
-//
     public void displayPopulation(){
         rabbitMaker.breedRabbits();
         for (int i = 0; i <rabbitMaker.getPopulation(); i++) {
